@@ -371,6 +371,11 @@ public class Alumno extends javax.swing.JFrame {
                 "Cursos", "Ciclo"
             }
         ));
+        jTableCursos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTableCursosMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableCursos);
 
         jButton3.setText("Seleccionar");
@@ -442,6 +447,15 @@ public class Alumno extends javax.swing.JFrame {
         Mostrar();
         CargaCursos();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jTableCursosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCursosMousePressed
+        // TODO add your handling code here:
+        System.out.println("Click xd");
+        if(jTableCursos.getSelectedRow()!=-1){
+            System.out.println("Fila seleccionada : "+ jTableCursos.getSelectedRow());
+        }
+        
+    }//GEN-LAST:event_jTableCursosMousePressed
     
     /**
      * @param args the command line arguments

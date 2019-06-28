@@ -36,9 +36,9 @@
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPasswordFieldContra" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jTextFieldUsu" min="-2" pref="131" max="-2" attributes="0"/>
+                          <Component id="jPasswordFieldContra" min="-2" pref="131" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -68,6 +68,9 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="jTextFieldUsu">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="12345673"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -88,6 +91,12 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="jPasswordFieldContra">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Huatay"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordFieldContraActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

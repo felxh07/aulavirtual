@@ -85,6 +85,8 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTextFieldUsu.setText("12345673");
+
         jLabel1.setText("USUARIO :");
 
         jLabel2.setText("CONTRASEÑA :");
@@ -93,6 +95,13 @@ public class Login extends javax.swing.JFrame {
         jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLoginActionPerformed(evt);
+            }
+        });
+
+        jPasswordFieldContra.setText("Huatay");
+        jPasswordFieldContra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordFieldContraActionPerformed(evt);
             }
         });
 
@@ -111,9 +120,9 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPasswordFieldContra)
-                            .addComponent(jTextFieldUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPasswordFieldContra, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -139,6 +148,10 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         Login();
     }//GEN-LAST:event_jButtonLoginActionPerformed
+
+    private void jPasswordFieldContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldContraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordFieldContraActionPerformed
 
     /**
      * @param args the command line arguments

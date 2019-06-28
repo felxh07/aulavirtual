@@ -5,16 +5,33 @@
  */
 package aulavirtual;
 
+import Conexion.Conectar;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Alex
  */
 public class ProfesorAlumnos extends javax.swing.JFrame {
 
+    private static ProfesorAlumnos instance = null;
+
+    public static ProfesorAlumnos getInstance() {
+        if (instance == null) {
+            instance = new ProfesorAlumnos();
+        }
+        return instance;
+    }
+
     /**
      * Creates new form ProfesorAlumnos
      */
-    public ProfesorAlumnos() {
+    private ProfesorAlumnos() {
         initComponents();
     }
 
@@ -30,7 +47,7 @@ public class ProfesorAlumnos extends javax.swing.JFrame {
         jPanelCabecera = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableAlumno = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -52,18 +69,19 @@ public class ProfesorAlumnos extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAlumno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Nombres", "Apellidos", "Codigo"
+                "Apellidos  Nombres", "Codigo"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTableAlumno.setToolTipText("");
+        jScrollPane1.setViewportView(jTableAlumno);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semana 1", "Semana 2", "Semana 3", "Semana 4", "Semana 5", "Semana 6", "Semana 7", "Semana 8", "Semana 9", "Semana 10", "Semana 11", "Semana 12", "Semana 13", "Semana 14", "Semana 15", "Semana 16" }));
 
@@ -163,6 +181,9 @@ public class ProfesorAlumnos extends javax.swing.JFrame {
         });
     }
 
+    public DefaultTableModel getModeloTabla() {
+        return (DefaultTableModel) jTableAlumno.getModel();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -170,6 +191,6 @@ public class ProfesorAlumnos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelCabecera;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableAlumno;
     // End of variables declaration//GEN-END:variables
 }

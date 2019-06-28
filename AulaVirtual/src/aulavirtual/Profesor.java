@@ -5,6 +5,14 @@
  */
 package aulavirtual;
 
+import Conexion.Conectar;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Alex
@@ -19,12 +27,40 @@ public class Profesor extends javax.swing.JFrame {
     }
     /*creo una variable donde se va a almacenar el dni del profesor*/
     public String dniProfesor;
-    
-    public void obtenerDni(String dni){
-        dniProfesor=dni;
+
+    public void obtenerDni(String dni) {
+        dniProfesor = dni;
     }
-    
-    
+
+    private int indiceSeleccionado = -1;
+
+    public void CargaCursosProf() {
+        DefaultTableModel modelo = (DefaultTableModel) jTableProfe.getModel();
+        modelo.setRowCount(0);//limpiar el modelo
+        try {
+            Conectar cnx = new Conectar();
+            Connection registros = cnx.getConnection();
+            String sql = "select curso.nombre_curso,ciclo.nombreCiclo from curso \n"
+                    + " join ciclo on curso.numCiclo=ciclo.numCiclo \n"
+                    + " where curso.dni='" + dniProfesor + "'";
+            PreparedStatement st = registros.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Vector v = new Vector();
+                v.add(rs.getString(1));
+                v.add(rs.getString(2));
+
+                modelo.addRow(v);
+
+            }
+            jTableProfe.setModel(modelo);
+        } catch (SQLException e) {
+            System.out.println("Error" + e.getMessage());
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,10 +85,16 @@ public class Profesor extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jTextnomcurso = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableProfe = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanelCabecera.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -108,9 +150,9 @@ public class Profesor extends javax.swing.JFrame {
             .addGroup(jPanelInfoProfLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
         jPanelInfoProfLayout.setVerticalGroup(
             jPanelInfoProfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,6 +167,8 @@ public class Profesor extends javax.swing.JFrame {
         jPanelActividad.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jPanelCurso.setEnabled(false);
 
         jLabel1.setText("Nombre del curso");
 
@@ -144,30 +188,36 @@ public class Profesor extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanelCursoLayout = new javax.swing.GroupLayout(jPanelCurso);
         jPanelCurso.setLayout(jPanelCursoLayout);
         jPanelCursoLayout.setHorizontalGroup(
-            jPanelCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanelCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanelCursoLayout.createSequentialGroup()
-                .addGap(130, 130, 130)
+                .addGap(77, 77, 77)
                 .addComponent(jLabel1)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanelCursoLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanelCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCursoLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2))
+                        .addComponent(jTextnomcurso)
+                        .addContainerGap())
                     .addGroup(jPanelCursoLayout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
-                .addGap(27, 27, 27))
+                        .addGroup(jPanelCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelCursoLayout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2))
+                            .addGroup(jPanelCursoLayout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3)))
+                        .addGap(27, 27, 27))))
         );
         jPanelCursoLayout.setVerticalGroup(
             jPanelCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCursoLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextnomcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addGroup(jPanelCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3))
@@ -197,7 +247,7 @@ public class Profesor extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableProfe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -208,7 +258,13 @@ public class Profesor extends javax.swing.JFrame {
                 "Cursos", "Ciclo"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTableProfe.setToolTipText("");
+        jTableProfe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableProfeMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableProfe);
 
         javax.swing.GroupLayout jPanelActividadLayout = new javax.swing.GroupLayout(jPanelActividad);
         jPanelActividad.setLayout(jPanelActividadLayout);
@@ -260,7 +316,60 @@ public class Profesor extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        //String nombrecurso = jTextnomcurso.getText().trim();
+        if (indiceSeleccionado != -1) {
+            ProfesorAlumnos.getInstance().setVisible(true);
+            CargaAlumnos(ProfesorAlumnos.getInstance().getModeloTabla());
+        }else{
+            ProfesorAlumnos.getInstance().dispose();
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
+    public void CargaAlumnos(DefaultTableModel modeloTablaAlumnos) {
+        System.out.println("Indice seleccionado : " + indiceSeleccionado);
+
+        DefaultTableModel modelo = (DefaultTableModel) jTableProfe.getModel();
+        String cursoABuscar = String.valueOf(jTableProfe.getValueAt(indiceSeleccionado, 0));
+
+        modeloTablaAlumnos.setRowCount(0);//limpiar el modelo
+        try {
+            Conectar cnx = new Conectar();
+            Connection registros = cnx.getConnection();
+            String sql = "select persona.nombre, estudiante.codEstudiante from estudiante join persona on persona.dni=estudiante.dni\n"
+                    + "join curso_estudiantesemestre on estudiante.dni=curso_estudiantesemestre.dni\n"
+                    + "join curso on curso_estudiantesemestre.codCurso=curso.codCurso where nombre_curso=\"" + cursoABuscar + "\"";
+            PreparedStatement st = registros.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Vector v = new Vector();
+                v.add(rs.getString(1));
+                v.add(rs.getString(2));
+
+                modeloTablaAlumnos.addRow(v);
+
+            }
+            jTableProfe.setModel(modelo);
+        } catch (SQLException e) {
+            System.out.println("Error" + e.getMessage());
+        }
+
+    }
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        CargaCursosProf();
+
+    }//GEN-LAST:event_formWindowOpened
+
+
+    private void jTableProfeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProfeMouseClicked
+        // TODO add your handling code here:
+        int seleccion = jTableProfe.rowAtPoint(evt.getPoint());
+        indiceSeleccionado = jTableProfe.getSelectedRow();
+        jTextnomcurso.setText(String.valueOf(jTableProfe.getValueAt(seleccion, 0)));
+
+    }//GEN-LAST:event_jTableProfeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -314,6 +423,7 @@ public class Profesor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelCurso;
     private javax.swing.JPanel jPanelInfoProf;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableProfe;
+    private javax.swing.JTextField jTextnomcurso;
     // End of variables declaration//GEN-END:variables
 }
